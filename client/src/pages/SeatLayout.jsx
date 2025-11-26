@@ -1,84 +1,23 @@
-// import React, { useEffect, useState } from "react";
-// import { useNavigate, useParams } from "react-router-dom";
-// import { dummyDateTimeData, dummyShowsData } from "../assets/assets";
-// import Loading from "../components/Loading";
-// import { ClockIcon } from "lucide-react";
-
-// const SeatLayout = () => {
-//   const { id, date } = useParams();
-
-//   const [selectedSeats, setSelectedSeats] = useState([]);
-//   const [selectedTime, setSelectedTime] = useState(null);
-//   const [show, setShow] = useState(null);
-
-//   const navigate = useNavigate();
-
-//   const getShow = async () => {
-//     const show = dummyShowsData.find((show) => show._id === String(id));
-
-//     if (show) {
-//       setShow({
-//         movie: show,
-//         dateTime: dummyDateTimeData,
-//       });
-//     }
-//   };
-
-//   useEffect(() => {
-//     getShow();
-//   }, []);
-
-//   return show ? (
-//     <div className="flex flex-col md:flex-row px-6 md:px-16 lg:px-40 py-30 md:pt-50">
-//       {/* Available seats */}
-
-//       <div
-//         className="w-60 bg-primary/10 border border-primary/20 rounded-lg py-10
-//     h-max md:sticky md:top-30"
-//       >
-//         <p className="text-lg font-semibold px-6">Available Timings</p>
-//         <div className="mt-5 space-y-1">
-//           {show.dateTime[date].map((item) => {
-//             <div key={item.time}
-//               className={`flex items-center gap-2 px-6 py-2 w-max rounded-r-md cursor-pointer
-//           transition  ${
-//             selectedTime?.time === item.time
-//               ? "bg-primary text-white"
-//               : "hover:bg-primary/20"
-//           }`}
-//             >
-//               <ClockIcon className="w-4 h-4" />
-//               <p className="text-sm">{item.time}</p>
-//             </div>;
-//           })}
-//         </div>
-//       </div>
-
-//       {/* seats layout */}
-//     </div>
-//   ) : (
-//     <Loading />
-//   );
-// };
-
-// export default SeatLayout;
-
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { assets, dummyDateTimeData, dummyShowsData } from "../assets/assets";
 import { useEffect } from "react";
 import Loading from "../components/Loading";
-import { ClockIcon } from "lucide-react";
+import { ArrowRightIcon, ClockIcon } from "lucide-react";
 import iosTimeFormat from "../lib/isoTimeFormat";
 import BlurCircle from "../components/BlurCircle";
 import toast from "react-hot-toast";
 
 const SeatLayout = () => {
-
-  const groupRows=[["A","B"],["C","D"],["E","F"],["G","H"],["I","J"]]
+  const groupRows = [
+    ["A", "B"],
+    ["C", "D"],
+    ["E", "F"],
+    ["G", "H"],
+    ["I", "J"],
+  ];
 
   const { id, date } = useParams();
-
 
   const [selectedSeats, setSelectedSeats] = useState([]);
 
@@ -174,13 +113,25 @@ const SeatLayout = () => {
         <p className=" text-gray-400 text-sm mb-6 ">SCREEN SIDE</p>
 
         <div className=" flex flex-col items-center mt-10 text-xs text-gray-300 ">
-            <div className="gride grid-cols-2 md:grid-cols-1 gap-8 md:gap-2 mb-0">
-              {groupRows[0].map(row =>renderSeats(row))}
-            </div>
-        </div>
-        <div className="">
+          <div className="gride grid-cols-2 md:grid-cols-1 gap-8 md:gap-2 mb-6">
+            {groupRows[0].map((row) => renderSeats(row))}
+          </div>
 
+          <div className="grid grid-cols-2 gap-11">
+            {groupRows.slice(1).map((group, idx) => (
+              <div key={idx}>{group.map((row) => renderSeats(row))}</div>
+            ))}
+          </div>
         </div>
+
+        <button onClick={()=>navigate('/my-booking')}
+          className="flex items-center gap-1 mt-20 px-10 py-3 text-sm
+        bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer
+        active:scale-95"
+        >
+          Proceed to Checkout
+          <ArrowRightIcon strokeWidth={3} className="h-4 w-4" />
+        </button>
       </div>
     </div>
   ) : (
