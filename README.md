@@ -1,7 +1,6 @@
 # Movie Ticket Booking App 🎬🍿
 
 **Build and Deploy a Full-Stack Movie Ticket Booking App** — a complete MERN-style project that lets users sign up, browse movies, choose seats, and book tickets.  
-(Original tutorial/demo referenced: *Build and Deploy a Full Stack Movie Ticket Booking App*). :contentReference[oaicite:0]{index=0}
 
 ---
 
